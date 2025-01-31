@@ -1,15 +1,4 @@
-from flask import Flask, request, jsonify
-import requests
-
-app = Flask(__name__)
-
-
-@app.route('/nearest_station', methods=['GET'])
-def nearest_station():
-    lat = request.args.get('lat')
-    lon = request.args.get('lon')
-    station = get_nearest_charging_station(lat, lon)
-    return jsonify(station)
+import requests  # type: ignore
 
 
 def get_nearest_charging_station(lat, lon):
@@ -31,7 +20,3 @@ def get_nearest_charging_station(lat, lon):
             return {"error": "Aucune borne de recharge trouvée à proximité."}
     else:
         return {"error": f"Erreur lors de la requête : {response.status_code}"}
-
-
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)

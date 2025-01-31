@@ -1,3 +1,3 @@
 @echo off
-for %%f in (services\*.py) do start cmd /k python "%%f"
-start cmd /k python client_rest.py
+start cmd /k "cd backend && python app.py"
+start cmd /k "cd frontend && npm start"

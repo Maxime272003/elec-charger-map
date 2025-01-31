@@ -1,11 +1,8 @@
-from flask import Flask, jsonify
-import requests
-
-app = Flask(__name__)
+import requests  # type: ignore
+import os
 
 
-@app.route('/vehicles', methods=['GET'])
-def vehicles():
+def get_vehicles():
     query = """
     query {
         vehicleList {
@@ -34,17 +31,9 @@ def vehicles():
     """
     headers = {
         'Content-Type': 'application/json',
-        'x-client-id': '678a0e236f014f34da84452e',
-        'x-app-id': '678a0e236f014f34da844530'
+        'x-client-id': os.getenv('X_CLIENT_ID'),
+        'x-app-id': os.getenv('X_APP_ID')
     }
     response = requests.post(
         'https://api.chargetrip.io/graphql', json={'query': query}, headers=headers)
-    if response.status_code == 200:
-        vehicles = response.json()['data']['vehicleList']
-        return jsonify(vehicles)
-    else:
-        return jsonify({"error": "Erreur lors de la récupération des véhicules."})
-
-
-if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    return response.json()['data']['vehicleList']
