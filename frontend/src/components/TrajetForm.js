@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 
-const TrajetForm = () => {
+const TrajetForm = ({ handleTrajet }) => {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
-    const [trajet, setTrajet] = useState(null);
 
-    const handleSubmit = (e) => {
+    const geocodeLocation = async (location) => {
+        const response = await fetch(`http://localhost:5000/geocode?location=${location}`);
+        const data = await response.json();
+        if (response.ok) {
+            return `${data.lon},${data.lat}`;
+        } else {
+            throw new Error(data.error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch(`http://localhost:5000/trajet?start=${start}&end=${end}`)
-            .then(response => response.json())
-            .then(data => setTrajet(data));
+        try {
+            const startCoords = await geocodeLocation(start);
+            const endCoords = await geocodeLocation(end);
+            handleTrajet(startCoords, endCoords);
+        } catch (error) {
+            console.error('Error geocoding location:', error);
+        }
     };
 
     return (
@@ -26,12 +39,6 @@ const TrajetForm = () => {
                 </label>
                 <button type="submit">Obtenir le trajet</button>
             </form>
-            {trajet && (
-                <div>
-                    <h3>Trajet trouvé:</h3>
-                    <pre>{JSON.stringify(trajet, null, 2)}</pre>
-                </div>
-            )}
         </div>
     );
 };
