@@ -26,7 +26,7 @@ const TrajetForm = ({ handleTrajet }) => {
     };
 
     return (
-        <div>
+        <div className="trajet-form">
             <h2>Trajet</h2>
             <form onSubmit={handleSubmit}>
                 <label>

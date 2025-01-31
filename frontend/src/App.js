@@ -25,10 +25,10 @@ const App = () => {
 
     return (
         <div>
+            <MapComponent trajet={trajet} />
             <VehicleList />
             <NearestStationForm />
             <TrajetForm handleTrajet={handleTrajet} />
-            <MapComponent trajet={trajet} />
         </div>
     );
 };
