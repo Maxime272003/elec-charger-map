@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const TrajetForm = ({ handleTrajet }) => {
+const TrajetForm = ({ handleTrajet, selectedVehicle }) => {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
 
@@ -19,7 +19,7 @@ const TrajetForm = ({ handleTrajet }) => {
         try {
             const startCoords = await geocodeLocation(start);
             const endCoords = await geocodeLocation(end);
-            handleTrajet(startCoords, endCoords);
+            handleTrajet(startCoords, endCoords, selectedVehicle.range.chargetrip_range.best);
         } catch (error) {
             console.error('Error geocoding location:', error);
         }

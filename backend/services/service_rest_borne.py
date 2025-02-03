@@ -10,6 +10,7 @@ def get_nearest_charging_station(lat, lon):
     }
 
     response = requests.get(url, params=params)
+    print(response.url)
 
     if response.status_code == 200:
         data = response.json()

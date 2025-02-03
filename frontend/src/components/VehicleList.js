@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const VehicleList = () => {
+const VehicleList = ({ setSelectedVehicle, selectedVehicle }) => {
     const [vehicles, setVehicles] = useState([]);
-    const [selectedVehicle, setSelectedVehicle] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:5000/vehicles')
