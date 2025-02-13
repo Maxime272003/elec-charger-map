@@ -10,7 +10,6 @@ const App = () => {
     const [error, setError] = useState(null);
     const [trajetTime, setTrajetTime] = useState(null);
 
-
     const handleTrajet = (start, end, autonomie) => {
         fetch(`http://localhost:5000/trajet?start=${start}&end=${end}`)
             .then(response => response.json())
@@ -22,11 +21,13 @@ const App = () => {
                     // Calculer les points intermédiaires le long du trajet
                     const pointsIntermediaires = [];
                     let distanceParcourue = 0;
+                    let totalDistance = 0; // Définir la variable totalDistance
                     for (let i = 1; i < coordinates.length; i++) {
                         const [lat1, lon1] = coordinates[i - 1];
                         const [lat2, lon2] = coordinates[i];
                         const distance = calculateDistance(lat1, lon1, lat2, lon2);
                         distanceParcourue += distance;
+                        totalDistance += distance; // Ajouter la distance au total
                         if (distanceParcourue >= autonomie) {
                             pointsIntermediaires.push(coordinates[i]);
                             distanceParcourue = 0;
@@ -47,6 +48,16 @@ const App = () => {
                             console.error('Error fetching charging stations:', error);
                             setError('Erreur lors de la récupération des bornes de recharge.');
                         });
+
+                    fetch(`http://localhost:5000/calculer_temps_trajet?distance=${totalDistance}&autonomie=${autonomie}&temps_chargement=30`)
+                        .then(response => response.json())
+                        .then(data => {
+                            setTrajetTime(data);
+                        })
+                        .catch(error => {
+                            console.error('Error calculating trajet time:', error);
+                            setError('Erreur lors du calcul du temps de trajet.');
+                        });
                 } else {
                     console.error('No features found in the response');
                     setError('Aucune donnée de trajet trouvée.');
@@ -55,16 +66,6 @@ const App = () => {
             .catch(error => {
                 console.error('Error fetching trajet:', error);
                 setError('Erreur lors de la récupération du trajet.');
-            });
-
-        fetch(`http://localhost:5000/calculer_temps_trajet?distance=${distance}&autonomie=${autonomie}&temps_chargement=30`)
-            .then(response => response.json())
-            .then(data => {
-                setTrajetTime(data);
-            })
-            .catch(error => {
-                console.error('Error calculating trajet time:', error);
-                setError('Erreur lors du calcul du temps de trajet.');
             });
     };
 
