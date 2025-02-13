@@ -1,3 +1,0 @@
-spyne==2.13.16
-six
-lxml
