@@ -3,8 +3,8 @@ from services.service_graphql_vehicule import get_vehicles
 from services.service_rest_borne import get_nearest_charging_station
 from services.service_rest_map import obtenir_trajet, geocode_location
 from services.service_soap import TrajetService
-from flask_cors import CORS  # type: ignore
-from dotenv import load_dotenv  # type: ignore
+from flask_cors import CORS
+from dotenv import load_dotenv 
 
 load_dotenv()
 

@@ -6,9 +6,17 @@ from wsgiref.simple_server import make_server
 class TrajetService(ServiceBase):
     @rpc(Float, Float, Float, _returns=Iterable(Unicode))
     def calculer_temps_trajet(ctx, distance, autonomie, temps_chargement):
-        time = distance / autonomie * 60 + temps_chargement
-        price = time * 2
-        return [str(time), str(price)]
+        vitesse_moyenne = 80  # km/h
+        prix_electricite = 0.2516  # €/kWh
+        consommation_moyenne = autonomie / 100  # kWh/km
+
+        temps_trajet = distance / vitesse_moyenne
+        temps_trajet_minutes = temps_trajet * 60
+        temps_total = temps_trajet_minutes + temps_chargement
+
+        cout_total = distance * consommation_moyenne * prix_electricite
+
+        return [str(temps_total), str(cout_total)]
 
 soap_app = Application([TrajetService], 'spyne.service.soap',
                        in_protocol=Soap11(validator='lxml'),
