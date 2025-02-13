@@ -2,6 +2,3 @@ Flask
 flask-cors
 requests
 python-dotenv
-spyne==2.13.16
-six
-lxml
