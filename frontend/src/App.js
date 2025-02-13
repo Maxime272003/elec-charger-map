@@ -47,7 +47,7 @@ const App = () => {
                             setError('Erreur lors de la récupération des bornes de recharge.');
                         });
 
-                    fetch(`https://elecmapapi.azurewebsites.net/calculer_temps_trajet?distance=${totalDistance}&autonomie=${autonomie}&nb_recharges=${pointsIntermediaires.length}`)
+                    fetch(`http://localhost:5000/calculer_temps_trajet?distance=${totalDistance}&autonomie=${autonomie}&nb_recharges=${pointsIntermediaires.length}`)
                         .then(response => response.json())
                         .then(data => {
                             setTrajetTime(data);
