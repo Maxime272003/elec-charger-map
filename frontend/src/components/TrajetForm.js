@@ -5,7 +5,7 @@ const TrajetForm = ({ handleTrajet, selectedVehicle }) => {
     const [end, setEnd] = useState('');
 
     const geocodeLocation = async (location) => {
-        const response = await fetch(`http://localhost:5000/geocode?location=${location}`);
+        const response = await fetch(`https://elecmapapi.azurewebsites.net/geocode?location=${location}`);
         const data = await response.json();
         if (response.ok) {
             return `${data.lon},${data.lat}`;

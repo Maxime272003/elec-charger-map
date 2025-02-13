@@ -58,7 +58,7 @@ def calculer_temps_trajet():
     """
 
     headers = {'Content-Type': 'text/xml'}
-    response = requests.post('http://localhost:8000/', data=soap_request, headers=headers)
+    response = requests.post('https://elecmapsoap.azurewebsites.net/', data=soap_request, headers=headers)
 
     # Parse la réponse SOAP
     root = etree.fromstring(response.content)

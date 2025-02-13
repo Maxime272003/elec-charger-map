@@ -4,7 +4,7 @@ const VehicleList = ({ setSelectedVehicle, selectedVehicle }) => {
     const [vehicles, setVehicles] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/vehicles')
+        fetch('https://elecmapapi.azurewebsites.net/vehicles')
             .then(response => response.json())
             .then(data => setVehicles(data || [])) 
             .catch(error => {

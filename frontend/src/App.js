@@ -12,7 +12,7 @@ const App = () => {
     const [trajetTime, setTrajetTime] = useState(null);
 
     const handleTrajet = (start, end, autonomie) => {
-        fetch(`http://localhost:5000/trajet?start=${start}&end=${end}`)
+        fetch(`https://elecmapapi.azurewebsites.net/trajet?start=${start}&end=${end}`)
             .then(response => response.json())
             .then(data => {
                 if (data.features && data.features.length > 0) {
@@ -35,7 +35,7 @@ const App = () => {
                     }
 
                     const fetchChargingStations = pointsIntermediaires.map(([lat, lon]) =>
-                        fetch(`http://localhost:5000/nearest_station?lat=${lat}&lon=${lon}`)
+                        fetch(`https://elecmapapi.azurewebsites.net/nearest_station?lat=${lat}&lon=${lon}`)
                             .then(response => response.json())
                     );
 
@@ -48,7 +48,7 @@ const App = () => {
                             setError('Erreur lors de la récupération des bornes de recharge.');
                         });
 
-                    fetch(`http://localhost:5000/calculer_temps_trajet?distance=${totalDistance}&autonomie=${autonomie}&nb_recharges=${pointsIntermediaires.length}`)
+                    fetch(`https://elecmapapi.azurewebsites.net/calculer_temps_trajet?distance=${totalDistance}&autonomie=${autonomie}&nb_recharges=${pointsIntermediaires.length}`)
                         .then(response => response.json())
                         .then(data => {
                             setTrajetTime(data);
