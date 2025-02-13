@@ -40,8 +40,8 @@ def geocode():
 def calculer_temps_trajet():
     distance = float(request.args.get('distance'))
     autonomie = float(request.args.get('autonomie'))
-    temps_chargement = float(request.args.get('temps_chargement'))
-    result = TrajetService().calculer_temps_trajet(None, distance, autonomie, temps_chargement)
+    nb_charge = int(request.args.get('nb_recharges'))
+    result = TrajetService().calculer_temps_trajet(None, distance, autonomie, nb_charge)
     return jsonify({"time": result[0], "price": result[1]})
 
 if __name__ == '__main__':

@@ -5,16 +5,20 @@ from wsgiref.simple_server import make_server
 
 class TrajetService(ServiceBase):
     @rpc(Float, Float, Float, _returns=Iterable(Unicode))
-    def calculer_temps_trajet(ctx, distance, autonomie, temps_chargement):
-        vitesse_moyenne = 80  # km/h
-        prix_electricite = 0.2516  # €/kWh
-        consommation_moyenne = autonomie / 100  # kWh/km
+    def calculer_temps_trajet(ctx, distance, autonomie, nb_charge):
 
+        prix_electricite = 0.574  # €/kWh
+        consommation_moyenne = 20.4 / 100  # kWh/km
+        prix_recharge = autonomie * consommation_moyenne * prix_electricite
+        cout_total = prix_recharge * nb_charge
+        cout_total = round(cout_total, 2)
+
+        vitesse_moyenne = 100  # km/h
         temps_trajet = distance / vitesse_moyenne
+        temps_chargement = 30 * nb_charge
         temps_trajet_minutes = temps_trajet * 60
-        temps_total = temps_trajet_minutes + temps_chargement
-
-        cout_total = distance * consommation_moyenne * prix_electricite
+        temps_trajet_minutes += temps_chargement
+        temps_total = str(int(temps_trajet_minutes // 60)) + "h" + str(int(temps_trajet_minutes % 60))
 
         return [str(temps_total), str(cout_total)]
 
