@@ -1,10 +1,11 @@
+import requests
 from flask import Flask, request, jsonify
 from services.service_graphql_vehicule import get_vehicles
 from services.service_rest_borne import get_nearest_charging_station
 from services.service_rest_map import obtenir_trajet, geocode_location
-from services.service_soap import TrajetService
 from flask_cors import CORS
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
+from lxml import etree
 
 load_dotenv()
 
@@ -41,8 +42,31 @@ def calculer_temps_trajet():
     distance = float(request.args.get('distance'))
     autonomie = float(request.args.get('autonomie'))
     nb_charge = int(request.args.get('nb_recharges'))
-    result = TrajetService().calculer_temps_trajet(None, distance, autonomie, nb_charge)
-    return jsonify({"time": result[0], "price": result[1]})
+
+    # Construire la requête SOAP
+    soap_request = f"""
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:spy="spyne.service.soap">
+       <soapenv:Header/>
+       <soapenv:Body>
+          <spy:calculer_temps_trajet>
+             <spy:distance>{distance}</spy:distance>
+             <spy:autonomie>{autonomie}</spy:autonomie>
+             <spy:nb_charge>{nb_charge}</spy:nb_charge>
+          </spy:calculer_temps_trajet>
+       </soapenv:Body>
+    </soapenv:Envelope>
+    """
+
+    headers = {'Content-Type': 'text/xml'}
+    response = requests.post('http://localhost:8000/', data=soap_request, headers=headers)
+
+    # Parse la réponse SOAP
+    root = etree.fromstring(response.content)
+    namespaces = {'ns': 'spyne.service.soap'}
+    time = root.find('.//ns:calculer_temps_trajetResponse/ns:calculer_temps_trajetResult/ns:string[1]', namespaces).text
+    price = root.find('.//ns:calculer_temps_trajetResponse/ns:calculer_temps_trajetResult/ns:string[2]', namespaces).text
+
+    return jsonify({"time": time, "price": price})
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

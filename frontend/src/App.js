@@ -3,6 +3,7 @@ import VehicleList from './components/VehicleList';
 import TrajetForm from './components/TrajetForm';
 import MapComponent from './components/MapComponent';
 
+// ...existing code...
 const App = () => {
     const [trajet, setTrajet] = useState(null);
     const [chargingStations, setChargingStations] = useState([]);
@@ -70,7 +71,7 @@ const App = () => {
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
         const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const dLon = (lon1 - lon2) * Math.PI / 180;
         const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                   Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                   Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -82,15 +83,17 @@ const App = () => {
         <div>
             <div className="sidebar">
                 {error && <div className="error">{error}</div>}
+                <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
                 {trajetTime && (
                     <div className="trajet-time">
-                        <h2>Temps de trajet</h2>
-                        <p>Temps: {trajetTime.time} minutes</p>
-                        <p>Prix: {trajetTime.price} euros</p>
+                        <h2>Détails</h2>
+                        <p>Temps : {trajetTime.time} minutes</p>
+                        <p>Prix : {trajetTime.price} euros</p>
                     </div>
                 )}
-                <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
-                <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
+                <div className="trajet-form-container">
+                    <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
+                </div>
             </div>
             <MapComponent trajet={trajet} chargingStations={chargingStations} />
         </div>

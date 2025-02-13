@@ -27,14 +27,13 @@ const TrajetForm = ({ handleTrajet, selectedVehicle }) => {
 
     return (
         <div className="trajet-form">
-            <h2>Trajet</h2>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Départ:
+                    Départ : 
                     <input type="text" value={start} onChange={(e) => setStart(e.target.value)} required />
                 </label>
                 <label>
-                    Arrivée:
+                    Arrivée :  
                     <input type="text" value={end} onChange={(e) => setEnd(e.target.value)} required />
                 </label>
                 <button type="submit">Obtenir le trajet</button>

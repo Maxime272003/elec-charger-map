@@ -17,8 +17,15 @@ const MapComponent = ({ trajet, chargingStations }) => {
 
         const map = mapRef.current;
 
-        const customIcon = L.icon({
-            iconUrl: '../assets/images/marker-icon.png',
+        const customIconGreen = L.icon({
+            iconUrl: '/images/marker_green.png',
+            iconSize: [38, 38], 
+            iconAnchor: [19, 38], 
+            popupAnchor: [0, -38] 
+        });
+
+        const customIconRed = L.icon({
+            iconUrl: '/images/marker_red.png',
             iconSize: [38, 38], 
             iconAnchor: [19, 38], 
             popupAnchor: [0, -38] 
@@ -27,11 +34,19 @@ const MapComponent = ({ trajet, chargingStations }) => {
         if (trajet) {
             const polyline = L.polyline(trajet, { color: 'blue' }).addTo(map);
             map.fitBounds(polyline.getBounds());
+
+            L.marker(trajet[0], { icon: customIconRed })
+                .addTo(map)
+                .bindPopup('Départ');
+
+            L.marker(trajet[trajet.length - 1], { icon: customIconRed })
+                .addTo(map)
+                .bindPopup('Arrivée');
         }
 
         if (chargingStations.length > 0) {
             chargingStations.forEach(station => {
-                L.marker([station.ylatitude, station.xlongitude], { icon: customIcon })
+                L.marker([station.ylatitude, station.xlongitude], { icon: customIconGreen })
                     .addTo(map)
                     .bindPopup(`<b>${station.n_station}</b><br>${station.ad_station}`);
             });

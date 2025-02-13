@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 html, body, #root {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
 }
 
 .leaflet-container {
@@ -19,11 +23,21 @@ html, body, #root {
     position: absolute;
     top: 0;
     left: 0;
-    background: white;
-    padding: 10px;
+    background: #ffffff;
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.trajet-form-container {
+    padding-top : 20px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    padding-right: 20px;
 }
 
 .vehicle-details img {
@@ -36,7 +50,31 @@ html, body, #root {
     margin-top: 20px;
 }
 
+.trajet-time h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
 .error {
     color: red;
     margin-top: 10px;
+}
+
+input[type="text"], input[type="number"], button {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
 }

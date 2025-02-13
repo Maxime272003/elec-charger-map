@@ -20,7 +20,6 @@ const VehicleList = ({ setSelectedVehicle, selectedVehicle }) => {
 
     return (
         <div className="vehicle-list">
-            <h2>Liste des véhicules</h2>
             <select onChange={handleSelect}>
                 <option value="">--Sélectionnez un véhicule--</option>
                 {Array.isArray(vehicles) && vehicles.length > 0 ? (
