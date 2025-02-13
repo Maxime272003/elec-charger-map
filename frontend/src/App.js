@@ -18,23 +18,21 @@ const App = () => {
                     const coordinates = data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
                     setTrajet(coordinates);
 
-                    // Calculer les points intermédiaires le long du trajet
                     const pointsIntermediaires = [];
                     let distanceParcourue = 0;
-                    let totalDistance = 0; // Définir la variable totalDistance
+                    let totalDistance = 0;
                     for (let i = 1; i < coordinates.length; i++) {
                         const [lat1, lon1] = coordinates[i - 1];
                         const [lat2, lon2] = coordinates[i];
                         const distance = calculateDistance(lat1, lon1, lat2, lon2);
                         distanceParcourue += distance;
-                        totalDistance += distance; // Ajouter la distance au total
+                        totalDistance += distance;
                         if (distanceParcourue >= autonomie) {
                             pointsIntermediaires.push(coordinates[i]);
                             distanceParcourue = 0;
                         }
                     }
 
-                    // Récupérer les bornes de recharge pour chaque point intermédiaire
                     const fetchChargingStations = pointsIntermediaires.map(([lat, lon]) =>
                         fetch(`http://localhost:5000/nearest_station?lat=${lat}&lon=${lon}`)
                             .then(response => response.json())
@@ -69,7 +67,6 @@ const App = () => {
             });
     };
 
-    // Fonction pour calculer la distance entre deux points géographiques
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
         const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -83,17 +80,19 @@ const App = () => {
 
     return (
         <div>
-            {error && <div className="error">{error}</div>}
-            {trajetTime && (
-                <div className="trajet-time">
-                    <h2>Temps de trajet</h2>
-                    <p>Temps: {trajetTime.time} minutes</p>
-                    <p>Prix: {trajetTime.price} euros</p>
-                </div>
-            )}
+            <div className="sidebar">
+                {error && <div className="error">{error}</div>}
+                {trajetTime && (
+                    <div className="trajet-time">
+                        <h2>Temps de trajet</h2>
+                        <p>Temps: {trajetTime.time} minutes</p>
+                        <p>Prix: {trajetTime.price} euros</p>
+                    </div>
+                )}
+                <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
+                <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
+            </div>
             <MapComponent trajet={trajet} chargingStations={chargingStations} />
-            <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
-            <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
         </div>
     );
 };

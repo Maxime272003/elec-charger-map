@@ -6,22 +6,24 @@ html, body, #root {
 
 .leaflet-container {
     height: 100vh;
-    width: 100vw;
+    width: calc(100vw - 300px); /* Réduire la largeur pour laisser de la place à la sidebar */
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     z-index: 0;
 }
 
-.vehicle-list {
+.sidebar {
+    width: 300px;
+    height: 100vh;
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    top: 0;
+    left: 0;
     background: white;
     padding: 10px;
-    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .vehicle-details img {
@@ -30,24 +32,11 @@ html, body, #root {
     margin: 10px 0;
 }
 
-.trajet-form {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+.trajet-time {
+    margin-top: 20px;
 }
 
-.trajet-time {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+.error {
+    color: red;
+    margin-top: 10px;
 }
