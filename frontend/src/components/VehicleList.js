@@ -6,7 +6,11 @@ const VehicleList = ({ setSelectedVehicle, selectedVehicle }) => {
     useEffect(() => {
         fetch('http://localhost:5000/vehicles')
             .then(response => response.json())
-            .then(data => setVehicles(data));
+            .then(data => setVehicles(data || [])) 
+            .catch(error => {
+                console.error('Error fetching vehicles:', error);
+                setVehicles([]); 
+            });
     }, []);
 
     const handleSelect = (e) => {
@@ -19,11 +23,15 @@ const VehicleList = ({ setSelectedVehicle, selectedVehicle }) => {
             <h2>Liste des véhicules</h2>
             <select onChange={handleSelect}>
                 <option value="">--Sélectionnez un véhicule--</option>
-                {vehicles.map(vehicle => (
-                    <option key={vehicle.id} value={vehicle.id}>
-                        {vehicle.naming.make} {vehicle.naming.model}
-                    </option>
-                ))}
+                {Array.isArray(vehicles) && vehicles.length > 0 ? (
+                    vehicles.map(vehicle => (
+                        <option key={vehicle.id} value={vehicle.id}>
+                            {vehicle.naming.make} {vehicle.naming.model}
+                        </option>
+                    ))
+                ) : (
+                    <option disabled>Chargement des véhicules...</option>
+                )}
             </select>
             {selectedVehicle && (
                 <div className="vehicle-details">

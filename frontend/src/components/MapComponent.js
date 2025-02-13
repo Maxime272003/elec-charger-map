@@ -1,14 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const MapComponent = ({ trajet, chargingStations }) => {
-    useEffect(() => {
-        const map = L.map('map').setView([48.8566, 2.3522], 6);
+    const mapRef = useRef(null);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+    useEffect(() => {
+
+        if (!mapRef.current) {
+            mapRef.current = L.map('map').setView([48.8566, 2.3522], 6);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mapRef.current);
+        }
+
+        const map = mapRef.current;
+
+        const customIcon = L.icon({
+            iconUrl: '../assets/images/marker-icon.png',
+            iconSize: [38, 38], 
+            iconAnchor: [19, 38], 
+            popupAnchor: [0, -38] 
+        });
 
         if (trajet) {
             const polyline = L.polyline(trajet, { color: 'blue' }).addTo(map);
@@ -17,15 +31,18 @@ const MapComponent = ({ trajet, chargingStations }) => {
 
         if (chargingStations.length > 0) {
             chargingStations.forEach(station => {
-                console.log(station);
-                L.marker([station.ylatitude, station.xlongitude])
+                L.marker([station.ylatitude, station.xlongitude], { icon: customIcon })
                     .addTo(map)
                     .bindPopup(`<b>${station.n_station}</b><br>${station.ad_station}`);
             });
         }
 
         return () => {
-            map.remove();
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker || layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
         };
     }, [trajet, chargingStations]);
 

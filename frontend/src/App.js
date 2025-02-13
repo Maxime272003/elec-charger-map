@@ -8,6 +8,8 @@ const App = () => {
     const [chargingStations, setChargingStations] = useState([]);
     const [selectedVehicle, setSelectedVehicle] = useState(null);
     const [error, setError] = useState(null);
+    const [trajetTime, setTrajetTime] = useState(null);
+
 
     const handleTrajet = (start, end, autonomie) => {
         fetch(`http://localhost:5000/trajet?start=${start}&end=${end}`)
@@ -54,11 +56,21 @@ const App = () => {
                 console.error('Error fetching trajet:', error);
                 setError('Erreur lors de la récupération du trajet.');
             });
+
+        fetch(`http://localhost:5000/calculer_temps_trajet?distance=${distance}&autonomie=${autonomie}&temps_chargement=30`)
+            .then(response => response.json())
+            .then(data => {
+                setTrajetTime(data);
+            })
+            .catch(error => {
+                console.error('Error calculating trajet time:', error);
+                setError('Erreur lors du calcul du temps de trajet.');
+            });
     };
 
     // Fonction pour calculer la distance entre deux points géographiques
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
-        const R = 6371; // Rayon de la Terre en km
+        const R = 6371;
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLon = (lon2 - lon1) * Math.PI / 180;
         const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -71,6 +83,13 @@ const App = () => {
     return (
         <div>
             {error && <div className="error">{error}</div>}
+            {trajetTime && (
+                <div className="trajet-time">
+                    <h2>Temps de trajet</h2>
+                    <p>Temps: {trajetTime.time} minutes</p>
+                    <p>Prix: {trajetTime.price} euros</p>
+                </div>
+            )}
             <MapComponent trajet={trajet} chargingStations={chargingStations} />
             <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
             <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />

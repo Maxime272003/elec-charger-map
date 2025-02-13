@@ -5,7 +5,7 @@ def get_nearest_charging_station(lat, lon):
     url = "https://odre.opendatasoft.com/api/records/1.0/search/"
     params = {
         'dataset': 'bornes-irve',
-        'geofilter.distance': f'{lat},{lon},10000',
+        'geofilter.distance': f'{lat},{lon},100000',
         'rows': 1,
     }
 
