@@ -3,7 +3,6 @@ import VehicleList from './components/VehicleList';
 import TrajetForm from './components/TrajetForm';
 import MapComponent from './components/MapComponent';
 
-// ...existing code...
 const App = () => {
     const [trajet, setTrajet] = useState(null);
     const [chargingStations, setChargingStations] = useState([]);
@@ -86,8 +85,8 @@ const App = () => {
                 <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
                 <div className="trajet-time">
                     <h2>Détails</h2>
-                    <p>Temps : {'0h00' || trajetTime.time} minutes</p>
-                    <p>Prix : {'0' || trajetTime.price} euros</p>
+                    <p>Temps : {trajetTime ? `${trajetTime.time} minutes` : '0h00'}</p>
+                    <p>Prix : {trajetTime ? `${trajetTime.price} euros` : '0'}</p>
                 </div>
                 <div className="trajet-form-container">
                     <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
