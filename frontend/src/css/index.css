@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 html, body, #root {
-    height: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
@@ -9,8 +9,8 @@ html, body, #root {
 }
 
 .leaflet-container {
-    height: 100vh;
-    width: calc(100vw - 300px); /* Réduire la largeur pour laisser de la place à la sidebar */
+    height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     right: 0;
@@ -19,10 +19,10 @@ html, body, #root {
 
 .sidebar {
     width: 300px;
-    height: 100vh;
+    height: auto;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10%;
+    left: 20px;
     background: #ffffff;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,8 @@ html, body, #root {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 10%;
+    border-radius: 10px;
 }
 
 .trajet-form-container {
@@ -57,7 +58,7 @@ html, body, #root {
 
 .error {
     color: red;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 input[type="text"], input[type="number"], button {

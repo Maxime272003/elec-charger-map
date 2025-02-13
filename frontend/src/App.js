@@ -84,13 +84,11 @@ const App = () => {
             <div className="sidebar">
                 {error && <div className="error">{error}</div>}
                 <VehicleList setSelectedVehicle={setSelectedVehicle} selectedVehicle={selectedVehicle} />
-                {trajetTime && (
-                    <div className="trajet-time">
-                        <h2>Détails</h2>
-                        <p>Temps : {trajetTime.time} minutes</p>
-                        <p>Prix : {trajetTime.price} euros</p>
-                    </div>
-                )}
+                <div className="trajet-time">
+                    <h2>Détails</h2>
+                    <p>Temps : {'0h00' || trajetTime.time} minutes</p>
+                    <p>Prix : {'0' || trajetTime.price} euros</p>
+                </div>
                 <div className="trajet-form-container">
                     <TrajetForm handleTrajet={handleTrajet} selectedVehicle={selectedVehicle} />
                 </div>
