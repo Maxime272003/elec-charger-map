@@ -1,5 +1,8 @@
 # EV Services
 
+- ROUSSEAU Maxime
+- Site front : https://elecmapfront.azurewebsites.net/
+
 ## Description
 Ce projet fournit une API pour obtenir des informations sur les véhicules électriques, les bornes de recharge les plus proches, les trajets et le calcul du temps de trajet.
 
