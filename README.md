@@ -3,6 +3,45 @@
 ## Description
 Ce projet fournit une API pour obtenir des informations sur les véhicules électriques, les bornes de recharge les plus proches, les trajets et le calcul du temps de trajet.
 
+
+## Technologies
+- Python
+- Flask
+- React
+- SOAP
+
+## Documentation API
+
+### Routes
+
+# 1. GET /vehicles https://elecmapapi.azurewebsites.net/vehicles
+Récupère la liste des véhicules électriques.
+
+[
+  {
+    "id": "string",
+    "naming": {
+      "make": "string",
+      "model": "string",
+      "chargetrip_version": "string"
+    },
+    "media": {
+      "image": {
+        "thumbnail_url": "string"
+      }
+    },
+    "battery": {
+      "usable_kwh": "number"
+    },
+    "range": {
+      "chargetrip_range": {
+        "best": "number",
+        "worst": "number"
+      }
+    }
+  }
+]
+
 ## Installation
 
 1. Clonez le dépôt :
