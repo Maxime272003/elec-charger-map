@@ -14,33 +14,9 @@ Ce projet fournit une API pour obtenir des informations sur les véhicules élec
 
 ### Routes
 
-# 1. GET /vehicles https://elecmapapi.azurewebsites.net/vehicles
+# 1. GET /vehicles
 Récupère la liste des véhicules électriques.
-
-[
-  {
-    "id": "string",
-    "naming": {
-      "make": "string",
-      "model": "string",
-      "chargetrip_version": "string"
-    },
-    "media": {
-      "image": {
-        "thumbnail_url": "string"
-      }
-    },
-    "battery": {
-      "usable_kwh": "number"
-    },
-    "range": {
-      "chargetrip_range": {
-        "best": "number",
-        "worst": "number"
-      }
-    }
-  }
-]
+https://elecmapapi.azurewebsites.net/vehicles
 
 ## Installation
 
