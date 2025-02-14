@@ -7,7 +7,7 @@ Ce projet fournit une API pour obtenir des informations sur les véhicules élec
 
 1. Clonez le dépôt :
     ```sh
-    git clone <url_du_dépôt>
+    git clone https://github.com/Maxime272003/elec-charger-map.git
     cd <nom_du_dépôt>
     ```
 
