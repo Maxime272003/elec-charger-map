@@ -46,7 +46,7 @@ Récupère la liste des véhicules électriques.
 
 1. Clonez le dépôt :
     ```sh
-    git clone <url_du_dépôt>
+    git clone https://github.com/Maxime272003/elec-charger-map.git
     cd <nom_du_dépôt>
     ```
 
