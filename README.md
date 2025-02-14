@@ -27,7 +27,7 @@ Récupère la borne de recharge la plus proche.
 Récupère les coordonnées géographiques d'une ville.
 - Paramètres :
     - city : nom de la ville
-https://elecmapapi.azurewebsites.net/geocode?location=Paris
+- https://elecmapapi.azurewebsites.net/geocode?location=Paris
 
 ### 4. GET /trajet
 Récupère le trajet entre deux points.
