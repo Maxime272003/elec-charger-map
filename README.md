@@ -12,24 +12,24 @@ Ce projet fournit une API pour obtenir des informations sur les véhicules élec
 
 ## Documentation API
 
-# 1. GET /vehicles
+### 1. GET /vehicles
 Récupère la liste des véhicules électriques.
 - https://elecmapapi.azurewebsites.net/vehicles
 
-# 2. GET /nearest_station
+### 2. GET /nearest_station
 Récupère la borne de recharge la plus proche.
 - Paramètres :
     - lat : latitude
     - lon : longitude
 - https://elecmapapi.azurewebsites.net/nearest_station?lat=48.858844&lon=2.294351
 
-# 3. GET /geocode
+### 3. GET /geocode
 Récupère les coordonnées géographiques d'une ville.
 - Paramètres :
     - city : nom de la ville
 https://elecmapapi.azurewebsites.net/geocode?location=Paris
 
-# 4. GET /trajet
+### 4. GET /trajet
 Récupère le trajet entre deux points.
 - Paramètres :
     - start : point de départ (latitude, longitude)
