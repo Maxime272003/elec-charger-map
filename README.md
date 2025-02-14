@@ -5,7 +5,7 @@ Ce projet fournit une API pour obtenir des informations sur les véhicules élec
 
 
 ## Technologies
-- Python
+- Python3.9
 - Flask
 - React
 - SOAP
@@ -38,7 +38,7 @@ Récupère le trajet entre deux points.
 
 
 
-## Installation
+## Installation pour le local
 
 1. Clonez le dépôt :
     ```sh
